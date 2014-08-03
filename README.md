@@ -13,20 +13,20 @@ the source files you want to build  build.mk  takes care of dependencies even th
 you modify a source file, it only rebuilds what it has to (seems lot faster than CMake to me).
 
 build.mk:
-  TYPE      Type of project (lib, exe)
-  SOURCES   Names of cpp files; ex: str.cpp util.cpp
-  INCLUDES  Include directories with -I compiler option; ex: -I../include -I/usr/local/include
-  MKDIRS    Names of dirs to create; ex: ../lib
-  OUT       Name of the output file; ex: ../lib/libtest.a
-  DIRS      Names of directories with makefiles to build; ex: src test
-  EXTMAKES  Names of makefiles to build; ex: proja.mk projb.mk
-
-  CONFIG    Build config (debug, release)
-
-  make                -- builds (defaults to debug)
-  make CONFIG=release -- builds release
-  make -B             -- builds even if up to date
-  make cleanall       -- cleans
-  make clean          -- cleans current folder/makefile only
-  make xx._s          -- generates assembly/listing file for xx.cpp
-  make xx._p          -- generates preprocessed file for xx.cpp
+<br>  TYPE      Type of project (lib, exe)
+<br>  SOURCES   Names of cpp files; ex: str.cpp util.cpp
+<br>  INCLUDES  Include directories with -I compiler option; ex: -I../include -I/usr/local/include
+<br>  MKDIRS    Names of dirs to create; ex: ../lib
+<br>  OUT       Name of the output file; ex: ../lib/libtest.a
+<br>  DIRS      Names of directories with makefiles to build; ex: src test
+<br>  EXTMAKES  Names of makefiles to build; ex: proja.mk projb.mk
+<br>
+<br>  CONFIG    Build config (debug, release)
+<br>
+<br>  make                -- builds (defaults to debug)
+<br>  make CONFIG=release -- builds release
+<br>  make -B             -- builds even if up to date
+<br>  make cleanall       -- cleans
+<br>  make clean          -- cleans current folder/makefile only
+<br>  make xx._s          -- generates assembly/listing file for xx.cpp
+<br>  make xx._p          -- generates preprocessed file for xx.cpp
