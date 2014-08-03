@@ -8,9 +8,11 @@ I didn't want to use new syntax and generated makefiles.  I also wanted to add n
 everything is being built.
 
 With build.mk, just create a very simple makefile in each project folder.  It has include the provided build.mk.
-Then simply set some variables in your makefile.   A make file can either build a 'lib' or an 'exe'.  You just list
-the source files you want to build  build.mk  takes care of dependencies even the header file dependencies--so when
-you modify a source file, it only rebuilds what it has to (seems lot faster than CMake to me).
+In each makefile, you can either build the current folder or specify which folders to build (using DIRS).  Simply set
+some variables in your makefile.  Besides sub-folders, a makefile can either build a 'lib' or an 'exe' (using TYPE).
+You just list the source files (using SOURCES) you want to build. Then build.mk (you included) takes care of dependencies
+even the header file dependencies--so when you modify a source file, it only rebuilds what it has to (seems lot faster
+than CMake to me).
 
 build.mk:
 <br>  TYPE      Type of project (lib, exe)
