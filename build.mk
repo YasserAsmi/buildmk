@@ -2,6 +2,7 @@
 # Released under the MIT License (http://opensource.org/licenses/MIT)
 #
 # build.mk:
+# 	CONFIG    Build config (debug, release)
 # 	TYPE      Type of project (lib, exe)
 # 	SOURCES   Names of cpp files; ex: str.cpp util.cpp
 # 	INCLUDES  Include directories with -I compiler option; ex: -I../include -I/usr/local/include
@@ -10,21 +11,21 @@
 #	DIRS      Names of directories with makefiles to build; ex: src test
 #   EXTMAKES  Names of makefiles to build; ex: proja.mk projb.mk
 #
-# 	CONFIG    Build config (debug, release)
+#   $(PWD)    Current directory (ie with current makefile)
 #
-#   make          	    -- builds (defaults to debug)
-#   make CONFIG=release -- builds release
-#   make -B       		-- builds even if up to date
-#   make cleanall 		-- cleans
-#   make clean    		-- cleans current folder/makefile only
-#   make xx._s    		-- generates assembly/listing file for xx.cpp
-#   make xx._p    		-- generates preprocessed file for xx.cpp
+#   make          -- builds
+#   make -B       -- builds even if up to date
+#   make cleanall -- cleans
+#   make clean    -- cleans current folder/makefile only
+#   make xx._s    -- generates assembly/listing file for xx.cpp
+#   make xx._p    -- generates preprocessed file for xx.cpp
 
 CONFIG ?= debug
 TYPE ?= exe
 INCLUDES ?= -I/usr/local/include
 
 OBJS = $(SOURCES:.cpp=.o)
+PWD = $(shell pwd)
 
 ifeq ($(CONFIG)	,debug)
 CXXFLAGS += -g -Wall
@@ -45,7 +46,7 @@ endif
 endif
 	@echo "Making '$(CURDIR)' CONFIG="$(CONFIG)
 
-$(OUT): $(OBJS)
+$(OUT): $(OBJS) $(LIBS)
 ifeq ($(TYPE),lib)
 	$(AR) rcs $(OUT) $(OBJS)
 endif
@@ -56,7 +57,7 @@ endif
 -include $(OBJS:.o=._d)
 
 %.o: %.cpp
-	$(CXX) -c $(INCLUDES) $(CXXFLAGS) $*.cpp -o $*.o
+	$(CXX) -c $(INCLUDES) $(CXXFLAGS) $(PWD)/$*.cpp -o $*.o
 	$(CXX) -MM $(INCLUDES) $(CXXFLAGS) $*.cpp > $*._d
 	@cp -f $*._d $*._d.tmp
 	@sed -e 's/.*://' -e 's/\\$$//' < $*._d.tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $*._d
