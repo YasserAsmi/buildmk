@@ -6,6 +6,8 @@
 # 	TYPE      Type of project (lib, exe)
 # 	SOURCES   Names of cpp files; ex: str.cpp util.cpp
 # 	INCLUDES  Include directories with -I compiler option; ex: -I../include -I/usr/local/include
+# 	INSLIBS   Libs to be linked specified with compiler options -l or -L; ex: -lpthread -L/usr/lib/x86_64-linux-gnu
+#   LIBS      Project libs to be linked--paths to .a files; ex: libRegExp.a ../lib/libtest.a
 # 	MKDIRS    Names of dirs to create; ex: ../lib
 # 	OUT       Name of the output file; ex: ../lib/libtest.a
 #	DIRS      Names of directories with makefiles to build; ex: src test
@@ -44,14 +46,15 @@ ifneq ($(CONFIG)	,debug)
 	@exit 1
 endif
 endif
-	@echo "Making '$(CURDIR)' CONFIG="$(CONFIG)
+	@echo "Making '$(PWD)' CONFIG="$(CONFIG)
 
 $(OUT): $(OBJS) $(LIBS)
+	echo $(LIBS)
 ifeq ($(TYPE),lib)
 	$(AR) rcs $(OUT) $(OBJS)
 endif
 ifeq ($(TYPE),exe)
-	$(CXX) -o $@ $^ ${LDFLAGS} $(LIBS)
+	$(CXX) -o $@ $^ ${LDFLAGS} $(LIBS) $(INSLIBS)
 endif
 
 -include $(OBJS:.o=._d)
