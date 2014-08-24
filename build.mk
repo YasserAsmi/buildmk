@@ -66,8 +66,8 @@ endif
 	@sed -e 's/.*://' -e 's/\\$$//' < $*._d.tmp | fmt -1 | sed -e 's/^ *//' -e 's/$$/:/' >> $*._d
 	@rm -f $*._d.tmp
 
-%._e: %.cpp
-	$(CXX) -E $(INCLUDES) $(CXXFLAGS) $*.cpp -o $*._e
+%._p: %.cpp
+	$(CXX) -E $(INCLUDES) $(CXXFLAGS) $*.cpp -o $*._p
 
 %._s: %.cpp
 	$(CXX) -c -Wa,-adhln -g $(INCLUDES) $(CXXFLAGS) $*.cpp > $*._s
@@ -79,11 +79,11 @@ extmakes: $(EXTMAKES)
 mkdirs: $(MKDIRS)
 
 clean:
-	rm -f $(OUT) *.o *._d *._e *._s
+	rm -f $(OUT) *.o *._d *._p *._s
 
 cleanall: TARG:=cleanall
 cleanall: $(DIRS) $(EXTMAKES)
-	rm -f $(OUT) *.o *._d *._e *._s
+	rm -f $(OUT) *.o *._d *._p *._s
 
 $(DIRS):
 	@$(MAKE) -C $@ $(TARG)
