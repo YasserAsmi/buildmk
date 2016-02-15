@@ -5,6 +5,5 @@ LIBS = ../libHelper.a
 INSLIBS = -lpcre
 OUT = test
 
-#-----------------------------------------------------------------
 include ../build.mk
 

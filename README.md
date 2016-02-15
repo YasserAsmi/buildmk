@@ -14,21 +14,42 @@ You just list the source files (using SOURCES) you want to build. Then build.mk 
 even the header file dependencies--so when you modify a source file, it only rebuilds what it has to (seems lot faster
 than CMake to me).
 
-build.mk:
-<br>  TYPE      Type of project (lib, exe)
-<br>  SOURCES   Names of cpp files; ex: str.cpp util.cpp
-<br>  INCLUDES  Include directories with -I compiler option; ex: -I../include -I/usr/local/include
-<br>  MKDIRS    Names of dirs to create; ex: ../lib
-<br>  OUT       Name of the output file; ex: ../lib/libtest.a
-<br>  DIRS      Names of directories with makefiles to build; ex: src test
-<br>  EXTMAKES  Names of makefiles to build; ex: proja.mk projb.mk
-<br>
-<br>  CONFIG    Build config (debug, release)
-<br>
-<br>  make                -- builds (defaults to debug)
-<br>  make CONFIG=release -- builds release
-<br>  make -B             -- builds even if up to date
-<br>  make cleanall       -- cleans
-<br>  make clean          -- cleans current folder/makefile only
-<br>  make xx._s          -- generates assembly/listing file for xx.cpp
-<br>  make xx._p          -- generates preprocessed file for xx.cpp
+Sample 'makefile' for building multiple folders:
+```
+DIRS = src example
+include build.mk
+```
+Sample 'makefile' for source files in a folder::
+```
+TYPE = exe
+SOURCES = test.cpp
+INCLUDES = -I. -I/usr/local/include -I../src
+LIBS = ../libHelper.a
+INSLIBS = -lpcre
+OUT = test
+include ../build.mk
+```
+
+build.mk directives and commands::
+```
+# build.mk:
+#   CONFIG    Build config (debug, opttest, release)
+#   TYPE      Type of project (lib, exe)
+#   SOURCES   Names of cpp files; ex: str.cpp util.cpp
+#   INCLUDES  Include directories with -I compiler option; ex: -I../include -I/usr/local/include
+#   INSLIBS   Libs to be linked specified with compiler options -l or -L; ex: -lpthread -L/usr/lib/x86_64-linux-gnu
+#   LIBS      Project libs to be linked--paths to .a files; ex: libRegExp.a ../lib/libtest.a
+#   MKDIRS    Names of dirs to create; ex: ../lib
+#   OUT       Name of the output file; ex: ../lib/libtest.a
+#   DIRS      Names of directories with makefiles to build; ex: src test
+#   EXTMAKES  Names of makefiles to build; ex: proja.mk projb.mk
+#
+#   $(PWD)    Current directory (ie with current makefile)
+#
+#   make          -- builds
+#   make -B       -- builds even if up to date
+#   make cleanall -- cleans all DIRS
+#   make clean    -- cleans current folder/makefile only
+#   make xx._s    -- generates assembly/listing file for xx.cpp
+#   make xx._p    -- generates preprocessed file for xx.cpp
+```
