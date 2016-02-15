@@ -92,13 +92,13 @@ extmakes: $(EXTMAKES)
 mkdirs: $(MKDIRS)
 
 clean:
-	rm -f $(OUT) oo/*.o oo/*.i oo/*._p oo/*._s
-	rmdir oo
+	rm -f $(OUT)
+	rm -rf oo
 
 cleanall: TARG:=cleanall
 cleanall: $(DIRS) $(EXTMAKES)
-	rm -f $(OUT) oo/*.o oo/*.i oo/*._p oo/*._s
-	rmdir oo
+	rm -f $(OUT)
+	rm -rf oo
 
 $(DIRS):
 	@$(MAKE) -C $@ $(TARG)
